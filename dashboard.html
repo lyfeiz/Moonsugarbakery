@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Owner Dashboard · Moon Sugar Bakery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#4C684A;--green-deep:#3A5138;--espresso:#2E2A26;--cream:#F6F1E7;--cream-2:#EFE7D6;
+    --gold:#C9A227;--berry:#9E4A5E;--white:#FFFDF9;--ink:#241F1B;--muted:#6A6157;--ok:#3f7d4f;--warn:#b8891f;--bad:#b0453b;
+    --shadow:0 8px 24px rgba(46,42,38,.10)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Jost',system-ui,sans-serif;line-height:1.55}
+  h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;margin:0}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  /* Gate */
+  #gate{position:fixed;inset:0;background:linear-gradient(160deg,#3A5138,#2E2A26);display:grid;place-items:center;z-index:50;padding:20px}
+  .gatecard{background:var(--white);border-radius:16px;padding:34px;max-width:380px;width:100%;box-shadow:var(--shadow);text-align:center}
+  .gatecard h1{font-size:1.9rem;color:var(--green-deep)}
+  .gatecard p{color:var(--muted);font-size:.92rem}
+  .gatecard input{width:100%;padding:13px;border:1.5px solid #cdbca2;border-radius:10px;font:inherit;margin:10px 0;min-height:48px}
+  .gatecard button{width:100%;padding:13px;border:none;border-radius:50px;background:var(--green);color:#fff;font:inherit;font-weight:500;cursor:pointer;min-height:48px}
+  .gatecard button:hover{background:var(--green-deep)}
+  .err{color:var(--bad);font-size:.85rem;min-height:1.1em}
+
+  header{background:var(--espresso);color:#f2ece0;padding:16px 0}
+  header .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+  header b{font-family:'Cormorant Garamond';font-size:1.4rem}
+  header .sub{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+  .btn-sm{background:none;border:1px solid #6b6456;color:#e7e0d3;border-radius:8px;padding:8px 14px;cursor:pointer;font:inherit;min-height:40px}
+
+  main{padding:26px 0 60px}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px}
+  .kpi{background:var(--white);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);border-top:4px solid var(--green)}
+  .kpi.gold{border-top-color:var(--gold)}.kpi.berry{border-top-color:var(--berry)}.kpi.deep{border-top-color:var(--espresso)}
+  .kpi .lab{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .kpi .val{font-family:'Cormorant Garamond';font-size:2.1rem;font-weight:600;color:var(--green-deep)}
+  .kpi .note{font-size:.8rem;color:var(--muted)}
+
+  .panel{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:22px;margin-bottom:22px}
+  .panel h2{font-size:1.5rem;color:var(--espresso);margin-bottom:4px}
+  .panel .cap{color:var(--muted);font-size:.88rem;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;font-size:.92rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #eadfca}
+  th{font-weight:600;color:var(--green-deep);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+  tbody tr:hover{background:#faf5ea}
+  .pill{display:inline-block;padding:3px 11px;border-radius:20px;font-size:.75rem;font-weight:600}
+  .pill.ok{background:#e5f0e6;color:var(--ok)}.pill.warn{background:#fbefd1;color:var(--warn)}.pill.bad{background:#f6dcd8;color:var(--bad)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .bar{height:12px;border-radius:8px;background:var(--cream-2);overflow:hidden}
+  .bar span{display:block;height:100%;background:var(--green)}
+  .banner{background:#fff7e6;border:1px solid #f0dfb0;border-radius:10px;padding:12px 16px;font-size:.86rem;color:#6b5b2b;margin-bottom:22px}
+  code{background:#efe7d6;padding:1px 6px;border-radius:5px;font-size:.85em}
+  @media(max-width:820px){.cards{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- Simple client-side gate. NOTE: real protection = Vercel password protection / auth. See setup guide. -->
+<div id="gate">
+  <div class="gatecard">
+    <h1>Moon Sugar</h1>
+    <p>Owner dashboard. Enter your passcode.</p>
+    <label for="pass" style="position:absolute;left:-9999px">Passcode</label>
+    <input id="pass" type="password" inputmode="numeric" autocomplete="current-password" placeholder="Passcode">
+    <button id="enter" type="button">Enter</button>
+    <p class="err" id="err" role="alert"></p>
+    <p style="font-size:.72rem;margin-top:14px">Demo passcode: <code>moon2026</code> · Replace with real protection at deploy (see guide).</p>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <div><b>Moon Sugar Bakery</b> <span class="sub">Owner Dashboard</span></div>
+    <button class="btn-sm" id="refresh" type="button">↻ Refresh data</button>
+  </div>
+</header>
+
+<main class="wrap" id="app" aria-live="polite">
+  <div class="banner" role="note">
+    <strong>How this works:</strong> this dashboard reads from your Google Sheet (published as CSV). Until you connect it, it shows sample data so you can see the layout. Setup steps are in <em>Setup &amp; Operations Guide</em>.
+  </div>
+
+  <section class="cards" aria-label="Key metrics">
+    <div class="kpi"><div class="lab">Open orders</div><div class="val" id="k-open">7</div><div class="note">next 14 days</div></div>
+    <div class="kpi gold"><div class="lab">Revenue (30d)</div><div class="val" id="k-rev">$1,940</div><div class="note">paid + confirmed</div></div>
+    <div class="kpi berry"><div class="lab">Low-stock items</div><div class="val" id="k-low">3</div><div class="note">reorder soon</div></div>
+    <div class="kpi deep"><div class="lab">Set aside for tax</div><div class="val" id="k-tax">$291</div><div class="note">~15% of revenue</div></div>
+  </section>
+
+  <section class="panel" aria-labelledby="orders-h">
+    <h2 id="orders-h">Incoming &amp; open orders</h2>
+    <p class="cap">Each new order attaches its recipe and updated cost automatically when customizations are flagged.</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Date</th><th>Customer</th><th>Item</th><th>Customizations</th><th>Price</th><th>Est. cost</th><th>Margin</th><th>Status</th></tr></thead>
+      <tbody id="orders">
+        <tr><td>Jul 19</td><td>R. Alvarez</td><td>8" custom cake</td><td>Reduced sugar</td><td>$85</td><td>$27</td><td>68%</td><td><span class="pill ok">Paid</span></td></tr>
+        <tr><td>Jul 21</td><td>M. Nguyen</td><td>Chocolate domes ×12</td><td>—</td><td>$60</td><td>$19</td><td>68%</td><td><span class="pill warn">Deposit</span></td></tr>
+        <tr><td>Jul 23</td><td>S. Castillo</td><td>Carrot cake (signature)</td><td>GF</td><td>$55</td><td>$21</td><td>62%</td><td><span class="pill warn">Confirmed</span></td></tr>
+        <tr><td>Jul 26</td><td>T. Brooks</td><td>Tiered cake (2)</td><td>Fresh fruit</td><td>$220</td><td>$68</td><td>69%</td><td><span class="pill bad">New</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="inv-h">
+      <h2 id="inv-h">Inventory &amp; low-stock flags</h2>
+      <p class="cap">Auto-flags when quantity drops below the reorder point.</p>
+      <table>
+        <thead><tr><th>Ingredient</th><th>On hand</th><th>Reorder at</th><th>Status</th></tr></thead>
+        <tbody id="inv">
+          <tr><td>Butter (lb)</td><td>4</td><td>10</td><td><span class="pill bad">Reorder</span></td></tr>
+          <tr><td>Couverture chocolate (lb)</td><td>6</td><td>8</td><td><span class="pill warn">Low</span></td></tr>
+          <tr><td>AP flour (lb)</td><td>22</td><td>15</td><td><span class="pill ok">OK</span></td></tr>
+          <tr><td>Heavy cream (qt)</td><td>3</td><td>6</td><td><span class="pill bad">Reorder</span></td></tr>
+          <tr><td>Cane sugar (lb)</td><td>18</td><td>12</td><td><span class="pill ok">OK</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel" aria-labelledby="top-h">
+      <h2 id="top-h">Top items (90 days)</h2>
+      <p class="cap">Spot your best sellers and protect their margins.</p>
+      <div id="top">
+        <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><span>Custom celebration cakes</span><span>32</span></div><div class="bar"><span style="width:100%"></span></div></div>
+        <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><span>Cheesecakes</span><span>21</span></div><div class="bar"><span style="width:66%"></span></div></div>
+        <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><span>Chocolate domes</span><span>18</span></div><div class="bar"><span style="width:56%"></span></div></div>
+        <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><span>Carrot cake (signature)</span><span>15</span></div><div class="bar"><span style="width:47%"></span></div></div>
+        <div><div style="display:flex;justify-content:space-between"><span>Seasonal fruit pies</span><span>11</span></div><div class="bar"><span style="width:34%"></span></div></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="tax-h">
+    <h2 id="tax-h">Tax &amp; profit set-aside</h2>
+    <p class="cap">A recommended amount to hold back from each order so tax time is never a surprise. Adjust the rate in your sheet as your CPA advises.</p>
+    <table>
+      <thead><tr><th>Month</th><th>Revenue</th><th>Ingredient + overhead</th><th>Est. profit</th><th>Set aside (15%)</th></tr></thead>
+      <tbody>
+        <tr><td>May 2026</td><td>$1,610</td><td>$540</td><td>$1,070</td><td><strong>$242</strong></td></tr>
+        <tr><td>Jun 2026</td><td>$1,780</td><td>$590</td><td>$1,190</td><td><strong>$267</strong></td></tr>
+        <tr><td>Jul 2026 (MTD)</td><td>$1,940</td><td>$620</td><td>$1,320</td><td><strong>$291</strong></td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<script>
+  // ---- Simple gate (deters casual access; NOT real security) ----
+  var PASS = "moon2026"; // change me, and prefer Vercel password protection at deploy
+  var gate=document.getElementById('gate'), pass=document.getElementById('pass'), err=document.getElementById('err');
+  function tryEnter(){ if(pass.value===PASS){ gate.style.display='none'; } else { err.textContent='Incorrect passcode.'; pass.value=''; pass.focus(); } }
+  document.getElementById('enter').addEventListener('click',tryEnter);
+  pass.addEventListener('keydown',function(e){ if(e.key==='Enter') tryEnter(); });
+  pass.focus();
+
+  // ---- Live data hook (Google Sheet published as CSV) ----
+  // 1) In Google Sheets: File > Share > Publish to web > choose the sheet/tab > CSV.
+  // 2) Paste each URL below. Leaving them blank keeps the sample data above.
+  var SHEET = { orders:"", inventory:"", summary:"" };
+  document.getElementById('refresh').addEventListener('click',function(){
+    if(!SHEET.orders){ alert("No Google Sheet connected yet. Add your published CSV URLs in dashboard.html (see Setup Guide)."); return; }
+    location.reload();
+  });
+</script>
+</body>
+</html>

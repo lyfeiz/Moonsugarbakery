@@ -35,6 +35,34 @@
     });
   });
 
+  // ---- Web3Forms AJAX submit → branded on-page thank-you (graceful fallback) ----
+  document.querySelectorAll('form[data-w3form]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('[type="submit"]');
+      var original = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' }
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        var note = document.createElement('div');
+        note.className = 'form-success';
+        note.setAttribute('role', 'status');
+        if (data && data.success) {
+          note.innerHTML = '<h2>Thank you — your request is in!</h2><p>I\'ll get back to you by email soon. Please check your inbox (and spam folder) for my reply.</p><p><a class="btn btn-outline" href="index.html">Back to home</a></p>';
+        } else {
+          note.innerHTML = '<h2>That didn\'t send</h2><p>Please email me directly at <a href="mailto:hello@moonsugarbakery.com">hello@moonsugarbakery.com</a> and I\'ll take care of you.</p>';
+        }
+        form.replaceWith(note);
+        note.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }).catch(function () {
+        form.removeAttribute('data-w3form');           // fall back to normal POST
+        if (btn) { btn.disabled = false; btn.textContent = original; }
+        form.submit();
+      });
+    });
+  });
+
   // ---- Gallery category modals (accessible dialog) ----
   var tiles = document.querySelectorAll('[data-modal-target]');
   if (tiles.length) {

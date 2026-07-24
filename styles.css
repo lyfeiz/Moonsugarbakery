@@ -50,6 +50,9 @@ section{padding:76px 0}
 .btn-primary:hover{background:var(--green-deep)}
 .btn-pink{background:var(--blush);color:#5c2b31;box-shadow:var(--shadow-sm)}
 .btn-pink:hover{background:var(--blush-mid);color:#4a2227}
+/* green background, branded pink text (AA-safe on deep green) */
+.btn-greenpink{background:var(--green-deep);color:var(--blush);box-shadow:var(--shadow-sm)}
+.btn-greenpink:hover,.btn-greenpink:focus-visible{background:var(--espresso);color:var(--blush)}
 .btn-gold{background:var(--gold);color:#2b2410}
 .btn-gold:hover{background:#b8931f}
 .btn-outline{background:transparent;color:var(--green-deep);border-color:var(--green)}
@@ -69,10 +72,10 @@ header.site{position:sticky;top:0;z-index:900;background:rgba(255,253,249,.94);
 .back:hover{background:var(--blush-soft)}
 .subpage .back{display:inline-flex}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--espresso)}
-.brand .logo{width:48px;height:48px;border-radius:50%;background:var(--green);color:#fff;
+.brand .logo{flex:0 0 auto;width:48px;height:48px;aspect-ratio:1/1;border-radius:50%;background:var(--green);color:#fff;
   display:grid;place-items:center;font-family:'Cormorant Garamond';font-size:1.6rem;font-weight:600;
   border:2px solid var(--blush)}
-img.logo{object-fit:cover;background:none}
+img.logo{flex:0 0 auto;width:48px;height:48px;aspect-ratio:1/1;border-radius:50%;object-fit:cover;background:none}
 .brand b{font-family:'Cormorant Garamond';font-size:1.4rem;font-weight:600;letter-spacing:.3px;line-height:1}
 .brand span{display:block;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .navlinks{display:flex;gap:4px;align-items:center;list-style:none;margin:0;padding:0}
@@ -175,6 +178,11 @@ legend{font-weight:600;padding:0 8px;color:var(--green-deep)}
 .checks label{display:flex;align-items:center;gap:8px;font-weight:400;margin:0}
 .checks input{width:auto;min-height:auto}
 .help{font-size:.85rem;color:var(--muted);margin-top:6px}
+.form-success{max-width:640px;margin:0 auto;background:#fff;border:1px solid var(--blush);border-radius:var(--radius);
+  padding:36px 30px;text-align:center;box-shadow:var(--shadow-sm)}
+.form-success h2{color:var(--green-deep);margin-top:0}
+.form-success p{color:var(--ink)}
+.form-success .btn{margin-top:12px}
 
 /* ---- FAQ ---- */
 details{background:#fff;border:1px solid var(--blush);border-radius:12px;padding:4px 20px;margin-bottom:12px}
@@ -199,6 +207,16 @@ details p{padding-bottom:14px;margin:0;color:var(--muted)}
 .page-head{background:linear-gradient(155deg,var(--blush-soft),var(--blush));padding:56px 0 48px;text-align:center}
 .page-head h1{color:var(--green-deep);font-size:clamp(2.4rem,5vw,3.6rem)}
 .page-head p{max-width:620px;margin:8px auto 0;color:#6b3f45}
+/* Page head with logo on the left (Services) */
+.head-split{display:grid;grid-template-columns:1fr 2fr;gap:34px;align-items:center;
+  max-width:var(--maxw);margin:0 auto;padding:0 22px;text-align:left}
+.head-split .head-logo{width:100%;max-width:260px;aspect-ratio:1/1;object-fit:contain;
+  justify-self:center;filter:drop-shadow(0 8px 20px rgba(120,70,80,.18))}
+.head-split .head-copy h1{margin:.2rem 0}
+.head-split .head-copy p{margin-left:0;max-width:640px}
+@media(max-width:760px){.head-split{grid-template-columns:1fr;text-align:center}
+  .head-split .head-copy p{margin-left:auto;margin-right:auto}
+  .head-split .head-logo{max-width:180px}}
 
 /* ---- Footer ---- */
 footer.site{background:var(--espresso);color:#e9e2d5;padding:54px 0 28px}
@@ -214,6 +232,9 @@ footer.site a{color:var(--blush)}
   .hero-inner{grid-template-columns:1fr;text-align:center}
   .hero .lede{margin-left:auto;margin-right:auto}
   .hero .cta-row{justify-content:center}
+  /* keep stacked CTA pills from crowding / shadows overlapping */
+  .cta-row{gap:16px}
+  .center .btn{margin:7px 5px}
   .hero-art{max-width:360px;margin:0 auto}
   .split{grid-template-columns:1fr}
   .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}

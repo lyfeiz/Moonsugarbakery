@@ -98,10 +98,6 @@
 </header>
 
 <main class="wrap" id="app" aria-live="polite">
-  <div class="banner" role="note">
-    <strong>How this updates:</strong> the dashboard reads your Google Sheet (published to the web as CSV). Until you paste those links into <code>CONFIG</code> in this file, it shows sample data that mirrors your workbook. Setup steps are in the Setup &amp; Operations Guide.
-  </div>
-
   <!-- KPI ROW -->
   <section class="kpis" aria-label="Key metrics">
     <div class="kpi"><div class="lab">Open orders</div><div class="val" id="k-open">–</div><div class="note">confirmed + new</div></div>
@@ -174,7 +170,7 @@
    File > Share > Publish to web > pick the tab > CSV, for each.
    Leave blank to keep the sample data below.
    ============================================================ */
-var CONFIG = { orders:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTDelDncEQBP74hEScGlFLaTgt1B0c7RWm-gz7yq3yNkL46lDF4XzRfeAheJXjD7A/pub?gid=127249792&single=true&output=csv", inventory:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTDelDncEQBP74hEScGlFLaTgt1B0c7RWm-gz7yq3yNkL46lDF4XzRfeAheJXjD7A/pub?gid=2020153546&single=true&output=csv" };
+var CONFIG = { orders:"", inventory:"" };
 var PASS = "moon2026";  // change me; prefer Cloudflare Access for real security
 
 /* ---- Sample data (mirrors the workbook seed) ---- */

@@ -163,7 +163,7 @@
   // ---- Live data hook (Google Sheet published as CSV) ----
   // 1) In Google Sheets: File > Share > Publish to web > choose the sheet/tab > CSV.
   // 2) Paste each URL below. Leaving them blank keeps the sample data above.
-  var SHEET = { orders:"", inventory:"", summary:"" };
+  var SHEET = { orders:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTDelDncEQBP74hEScGlFLaTgt1B0c7RWm-gz7yq3yNkL46lDF4XzRfeAheJXjD7A/pub?gid=127249792&single=true&output=csv", inventory:"https://docs.google.com/spreadsheets/d/e/2PACX-1vTDelDncEQBP74hEScGlFLaTgt1B0c7RWm-gz7yq3yNkL46lDF4XzRfeAheJXjD7A/pub?gid=2020153546&single=true&output=csv", summary:"" };
   document.getElementById('refresh').addEventListener('click',function(){
     if(!SHEET.orders){ alert("No Google Sheet connected yet. Add your published CSV URLs in dashboard.html (see Setup Guide)."); return; }
     location.reload();
